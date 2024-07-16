@@ -22,8 +22,8 @@ class TestCase:
     def __init__(self, _id, _M, _N):
         self._graph = dict()
         self._id = _id
-        self._M = _M
-        self._N = _N
+        self._M = _M if self._M >= 1 else 1
+        self._N = _N if self._N >= 1 else 1
         self._communities = dict()
 
     def getGraph(self): 
@@ -87,25 +87,24 @@ class TestCase:
             self.addCommunity(community)
         
         return self.getCommunities()
-
     
-    def sortCommunities(self, coms):
+    def sortCommunities(self, comms):
         def getLessUser(com):
-            com[0].getUsers().sort()
-            return com[0].getUsers()[0]
+            com[1].getUsers().sort()
+            return com[1].getUsers()[0]
         
-        return sorted(coms.items(), key=getLessUser)
+        return sorted(comms.items(), key=getLessUser)
     
     def printSolution(self):
         print("Caso " + str(self._id) + ":")
         # Comunidades se escribirán en orden ascendente, 
         # se tomará el usuario con menor numero y se ordenarán
         # según ese criterio
-        
-        sortedCommunities = self.sortCommunities(self.getCommunities())
-        for i in sortedCommunities:
-            self.getCommunities()[i].printSolution()
-        #print("\n")
+        comms = self.getCommunities()
+        sortedCommunities = self.sortCommunities(comms)
+        for key, i in sortedCommunities:
+            i.printSolution()
+        print("\n")
 
 class SocialNetwork:
     def __init__(self):
@@ -145,15 +144,14 @@ class SocialNetwork:
         self._testCases.update({Test._id:Test})
     
     def getCommunities(self):
-        for i in self.getTestCases():
-            self.getTestCases()[i].createCommunities()
+        for key, i in self.getTestCases().items():
+            i.createCommunities()
         self.printSolution()
 
     def printSolution(self):
-        for i in self.getTestCases():
-            self.getTestCases()[i].printSolution()
+        for key, i in self.getTestCases().items():
+            i.printSolution()
     
 RedSocial = SocialNetwork()
 RedSocial.getInput()
-
 RedSocial.getCommunities()
