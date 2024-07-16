@@ -22,8 +22,8 @@ class TestCase:
     def __init__(self, _id, _M, _N):
         self._graph = dict()
         self._id = _id
-        self._M = _M if self._M >= 1 else 1
-        self._N = _N if self._N >= 1 else 1
+        self._M = _M if _M >= 1 else 1
+        self._N = _N if _N >= 1 else 1
         self._communities = dict()
 
     def getGraph(self): 
