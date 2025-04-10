@@ -1,2 +1,2 @@
-# TareaRedesSocialesDISIII
+# Proyecto de Redes sociales
  
